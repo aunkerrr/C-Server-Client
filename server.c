@@ -71,7 +71,7 @@ int main(int argc, char const* argv[]) {
 
         printf("Client successfully connected.\n");
         
-        ssize_t bytes_read = recv(server_socket_fd, *buffer, sizeof(buffer) - 1, 0);
+        ssize_t bytes_read = recv(new_socket, buffer, sizeof(buffer) - 1, 0);
 
         if (bytes_read < 0)
         {
@@ -84,7 +84,7 @@ int main(int argc, char const* argv[]) {
         else 
         {
             buffer[bytes_read] = '\0';
-            buffer[strcspn(buffer, "\n\r")] = "\0";
+            buffer[strcspn(buffer, "\n\r")] = '\0';
             printf("Recieved from client: %s\n", buffer);
 
             for (size_t i = 0; i < (size_t)bytes_read; i++)
@@ -100,9 +100,9 @@ int main(int argc, char const* argv[]) {
             {
                 perror("Server send error");
             }
-            
-            close(new_socket);
         }
+        
+        close(new_socket);
     }
 
     close(server_socket_fd);

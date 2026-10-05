@@ -9,10 +9,19 @@
 int main(int argc, char *argv[]) {
     int client_fd;
 
+    if (argc < 3) 
+    {
+        perror("Invalid argument quantity.");
+        return 1;
+    }
+
+    int port = atoi(argv[2]);
+    int (port <= )
 
     if (client_fd = socket(AF_INET, SOCK_STREAM, 0) < 0)
     {
         perror("Socket creation error");
     }
     
+
 }
