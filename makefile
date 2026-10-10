@@ -9,14 +9,14 @@ all: $(TARGETS)
 server: server.o
 	$(CC) $(CFLAGS) server.o -o server
 
-server.o: server.с
-	$(CC) $(CFLAGS) server.c -o server.o
+server.o: server.c
+	$(CC) $(CFLAGS) -c server.c -o server.o
 
 client: client.o
 	$(CC) $(CFLAGS) client.o -o client
 
 client.o: client.c
-	$(CC) $(CFLAGS) client.c -o client.o
+	$(CC) $(CFLAGS) -c client.c -o client.o
 
 clean: 
-	rm -f clean *.o $(TARGETS)
+	rm -f *.o $(TARGETS)
