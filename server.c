@@ -1,3 +1,8 @@
+/**
+ * @file server.c
+ * @brief Socket TCP server echo con conversione in UPPERCASE.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,10 +17,18 @@
 #define BUFFER_SIZE 1024
 #define RESPONSE_SIZE 2048
 
+/**
+ * @brief Punto di ingresso del programma.
+ * @param argc Numero di argomenti da riga di comando.
+ * @param argv Vettore degli argomenti.
+ * @return 0 se termina correttamente, 1 in caso di errore.
+ */
 int main(int argc, char const* argv[]) {
+    (void)argc;
+    (void)argv;
+
     int server_socket_fd, new_socket;
     struct sockaddr_in address, client_addr;
-    socklen_t addrlen = sizeof(client_addr); 
     char buffer[BUFFER_SIZE] = {0};
     char response_buffer[RESPONSE_SIZE];
     int opt = 1;
@@ -56,10 +69,9 @@ int main(int argc, char const* argv[]) {
     }
     
     printf("Server started %d and listening port: %d... \n", server_socket_fd, PORT);
-    
-
 
     while(true) {
+        socklen_t addrlen = sizeof(client_addr); 
         new_socket = accept(server_socket_fd, (struct sockaddr*)&client_addr, &addrlen);
         
         if (new_socket < 0)
@@ -92,7 +104,7 @@ int main(int argc, char const* argv[]) {
                 buffer[i] = (char)toupper((unsigned char)buffer[i]);
             }
             
-            snprintf(response_buffer, sizeof(response_buffer), "%s Sended from server.\n", buffer);
+            snprintf(response_buffer, sizeof(response_buffer), "%s Sent from server.\n", buffer);
             
             ssize_t bytes_sent = send(new_socket, response_buffer, strlen(response_buffer), 0);
             

@@ -1,3 +1,8 @@
+/**
+ * @file client.c
+ * @brief Socket TCP client per l'invio di stringhe al server.
+ */
+
 #include <arpa/inet.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,9 +13,15 @@
 #define BUFFER_SIZE 1024
 #define RECIEVE_BUFFER_SIZE 2048
 
+
+/**
+ * @brief Punto di ingresso del client.
+ * @param argc Numero di argomenti (attesi 3: ./client <IP> <porta>).
+ * @param argv Vettore degli argomenti (argv[1]: IP server, argv[2]: porta).
+ * @return 0 se termina con successo, 1 in caso di errore.
+ */
 int main(int argc, char *argv[]) {
     int client_fd;
-    int port = atoi(argv[2]);
     struct sockaddr_in server_addr;
 
     if (argc < 3) 
@@ -18,6 +29,8 @@ int main(int argc, char *argv[]) {
         perror("Invalid argument quantity.");
         return 1;
     }
+
+    int port = atoi(argv[2]);
 
     if (port <= 0 || port > 65535)
     {
@@ -61,7 +74,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     
-    ssize_t bytes_send = send(client_fd, buffer, sizeof(buffer) - 1, 0);
+    ssize_t bytes_send = send(client_fd, buffer, strlen(buffer) - 1, 0);
     if (bytes_send < 0)
     {
         perror("Error while sending data");
